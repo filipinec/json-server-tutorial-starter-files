@@ -1,8 +1,12 @@
 // javascript for index.html
 const container = document.querySelector(".blogs")
-const renderPosts = async () => {
-  let url = 'http://localhost:3000/posts?_sort=-likes'
-  
+const searchForm = document.querySelector(".search")
+const renderPosts = async (term) => {
+  let url = 'http://localhost:3000/posts?_sort=likes'
+  if(term) {
+    url += `&q=${term}`
+  }
+  console.log(url)
   axios.get(url).then(res => {
   const posts = res.data
   console.log(posts)
@@ -19,8 +23,11 @@ const renderPosts = async () => {
   })
   container.innerHTML = template
 })
-
-
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  renderPosts(searchForm.term.value.trim())
+})
 }
 
-window.addEventListener('DOMContentLoaded', (e) => renderPosts());
+
+window.addEventListener('DOMContentLoaded', () => renderPosts());
