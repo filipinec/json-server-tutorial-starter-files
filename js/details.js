@@ -2,6 +2,7 @@
 const id = new URLSearchParams(window.location.search).get('id')
 console.log(id);
 const container = document.querySelector(".details")
+const deleteBtn = document.querySelector(".delete")
 
 const renderDetails = async () => {
   let url = ('http://localhost:3000/posts/' + id)
@@ -21,5 +22,9 @@ const renderDetails = async () => {
 
 }
 
+deleteBtn.addEventListener("click", async(e) => {
+axios.delete('http://localhost:3000/posts/' + id).then(() => alert("data has deleted"))
+ window.location.replace('/index.html')
+})
 
 window.addEventListener('DOMContentLoaded', (e) => renderDetails());
